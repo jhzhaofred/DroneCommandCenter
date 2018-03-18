@@ -15,3 +15,4 @@
     GMSServices.provideAPIKey("YOUR_API_KEY")
     
   Step 5: Build and run, enjoy!
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/Framework.png" alt="Laptop" align=center /> 
