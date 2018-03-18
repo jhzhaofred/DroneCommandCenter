@@ -7,7 +7,7 @@
     pod install
     open GMap.xcworkspace
   
-  Step 3: Get a Google Map API Key
+  Step 3: Get a [Google Map API Key](https://developers.google.com/maps/documentation/ios-sdk/get-api-key)
   
   Step 4: Change "YOUR_API_KEY" to the key you got in the previous step
   
