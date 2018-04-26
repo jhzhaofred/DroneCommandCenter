@@ -5,7 +5,7 @@
   Step 2: Open a terminal and cd to the root directory of this project (Where file Podfile resides)
   
     pod install
-    open GMap.xcworkspace
+    open GSDemo.xcworkspace
   
   Step 3: Create a [Firebase](https://firebase.google.com/) project. Then open the project add an iOS APP for your project. It 
   will generate a GoogleService-Info.plist file. Include this file into this project.
@@ -21,5 +21,9 @@
   Step 6: In the Info Section of the projec, change "DJISDKAppKey" to the key you got from DJI.
   
 <img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/info.png" width = "465" height = "230" alt="Firebase" align=center/> 
-    
   
+  Step 7: Build and enjoy!
+  
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/login.png" width = "1150" height = "598" alt="Firebase" align=center/> 
+
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/pilot.png" width = "1150" height = "598" alt="Firebase" align=center/> 
