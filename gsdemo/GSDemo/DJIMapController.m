@@ -14,12 +14,12 @@
 
 @implementation DJIMapController
 
+
 - (instancetype)init
 {
     if (self = [super init]) {
         
         self.editPoints = [[NSMutableArray alloc] init];
-        
     }
     
     return self;
@@ -62,7 +62,6 @@
         self.aircraftAnnotation = [[DJIAircraftAnnotation alloc] initWithCoordiante:location];
         [mapView addAnnotation:self.aircraftAnnotation];
     }
-    
     [self.aircraftAnnotation setCoordinate:location];
 }
 

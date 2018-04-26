@@ -14,6 +14,8 @@
 #import "DJIGSButtonViewController.h"
 #import "DJIWaypointConfigViewController.h"
 #import "DemoUtility.h"
+@import Firebase;
+@import GoogleSignIn;
 
 #define ENTER_DEBUG_MODE 0
 
@@ -36,6 +38,7 @@
 @property(nonatomic, strong) IBOutlet UILabel* hsLabel;
 @property(nonatomic, strong) IBOutlet UILabel* vsLabel;
 @property(nonatomic, strong) IBOutlet UILabel* altitudeLabel;
+@property (strong, nonatomic) FIRDatabaseReference *commentsRef;
 
 @property(nonatomic, strong) DJIMutableWaypointMission* waypointMission;
 @end
@@ -54,13 +57,43 @@
     [self.locationManager stopUpdatingLocation];
 }
 
+NSString *username;
+NSString *email;
+int state = 0;
+NSMutableDictionary *dict;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self registerApp];
+    self.signOutButton.hidden = YES;
     
+    [GIDSignIn sharedInstance].delegate = self;
+    [GIDSignIn sharedInstance].uiDelegate = self;
+    
+    [[GIDSignIn sharedInstance] signIn];
+    
+    
+    // [START create_database_reference]
+    self.ref = [[FIRDatabase database] reference];
+    // [END create_database_reference]
+    
+    [self.signInButton setColorScheme:kGIDSignInButtonColorSchemeDark];
+    dict = [NSMutableDictionary dictionaryWithCapacity:4];
+    [self registerApp];
     [self initUI];
     [self initData];
+}
+
+- (IBAction)didTapSignOut:(id)sender {
+    [[GIDSignIn sharedInstance] signOut];
+    self.signOutButton.hidden = YES;
+    self.signInButton.hidden = NO;
+    if (email != nil) {
+        [[[_ref child:@"users"] child:email] removeValue];
+        username = nil;
+        email = nil;
+    }
+    [self.mapView removeAnnotation: [self.mapController aircraftAnnotation]];
+    state = 1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,9 +105,64 @@
     return NO;
 }
 
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *, id> *)options {
+    return [[GIDSignIn sharedInstance] handleURL:url
+                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+}
+
+- (void)signIn:(GIDSignIn *)signIn
+didSignInForUser:(GIDGoogleUser *)user
+     withError:(NSError *)error {
+    printf("SignIn is tapped.\n");
+    username = user.profile.name;
+    email = [user.profile.email substringToIndex:(user.profile.email.length - 10)];
+    printf("User name is %s\n", [username UTF8String]);
+    printf("User email is %s\n", [email UTF8String]);
+    if (email != nil) {
+        [[[_ref child:@"users"] child:email]
+         setValue:@{@"username": username,
+                    @"location": @{
+                            @"latitude": [NSNumber numberWithDouble:0.000],
+                            @"longitude": [NSNumber numberWithDouble:0.000]}
+                    }];
+        self.signInButton.hidden = YES;
+        self.signOutButton.hidden = NO;
+    }
+    if (error == nil) {
+        GIDAuthentication *authentication = user.authentication;
+        FIRAuthCredential *credential =
+        [FIRGoogleAuthProvider credentialWithIDToken:authentication.idToken
+                                         accessToken:authentication.accessToken];
+        [[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"Error %@", error.localizedDescription);
+            }
+        }];
+    } else {
+        NSLog(@"Error %@", error.localizedDescription);
+    }
+    if (state) {
+        [self.mapView addAnnotation:[self.mapController aircraftAnnotation]];
+    }
+}
+
+- (void)signIn:(GIDSignIn *)signIn
+didDisconnectWithUser:(GIDGoogleUser *)user
+     withError:(NSError *)error {
+    if (email != nil) {
+        [[[_ref child:@"users"] child:email] removeValue];
+        username = nil;
+        email = nil;
+    }
+}
+
 #pragma mark Init Methods
 -(void)initData
 {
+    
     self.userLocation = kCLLocationCoordinate2DInvalid;
     self.droneLocation = kCLLocationCoordinate2DInvalid;
     
@@ -85,6 +173,7 @@
 
 -(void) initUI
 {
+    
     self.modeLabel.text = @"N/A";
     self.gpsLabel.text = @"0";
     self.vsLabel.text = @"0.0 M/S";
@@ -396,10 +485,62 @@
     self.vsLabel.text = [NSString stringWithFormat:@"%0.1f M/S",state.velocityZ];
     self.hsLabel.text = [NSString stringWithFormat:@"%0.1f M/S",(sqrtf(state.velocityX*state.velocityX + state.velocityY*state.velocityY))];
     self.altitudeLabel.text = [NSString stringWithFormat:@"%0.1f M",state.altitude];
-    
     [self.mapController updateAircraftLocation:self.droneLocation withMapView:self.mapView];
     double radianYaw = RADIAN(state.attitude.yaw);
     [self.mapController updateAircraftHeading:radianYaw];
+    int latat = (int) (self.droneLocation.latitude * 100000);
+    int longi = (int) (self.droneLocation.longitude * 100000);
+    if (email != nil) {
+        [[[[_ref child:@"users"] child:email] child:@"location"]
+         updateChildValues:@{@"latitude": [NSNumber numberWithDouble: ((double)latat)/100000],
+                             @"longitude": [NSNumber numberWithDouble:((double)longi)/100000]}];
+        self.commentsRef = [_ref child:@"users"];
+        
+        [_commentsRef
+         observeEventType:FIRDataEventTypeValue
+         withBlock:^(FIRDataSnapshot *snapshot) {
+             // Loop over children
+             NSEnumerator *children = [snapshot children];
+             FIRDataSnapshot *child;
+             while (child = [children nextObject]) {
+                 if ([child key] != email) {
+                     NSEnumerator *GeoInfo = [child children];
+                     FIRDataSnapshot *info;
+                     CLLocationCoordinate2D tmpLocation;
+                     NSString *tmpName;
+                     while (info = [GeoInfo nextObject]) {
+                         if ([[info key] isEqualToString: @"location"]) {
+                             NSEnumerator *PosInfo = [info children];
+                             FIRDataSnapshot *PosVal;
+                             while (PosVal = [PosInfo nextObject]) {
+                                 if ([[PosVal key] isEqualToString: @"latitude"]) {
+                                     //NSLog(@"\nRead latitude from %f. ",[[PosVal value] floatValue]);
+                                     tmpLocation.latitude = [[PosVal value] floatValue];
+                                 } else {
+                                     //NSLog(@"Read longitude from %f.\n",[[PosVal value] floatValue]);
+                                     tmpLocation.longitude = [[PosVal value] floatValue];
+                                 }
+                             }
+                         } else if ([[info key] isEqualToString: @"username"]) {
+                             tmpName = (NSString*)[info value];
+                             //NSLog(@"Read value from %s.\n",[tmpName UTF8String]);
+                             if ([dict objectForKey:tmpName] == nil) {
+                                 DJIAircraftAnnotation* tmpAnnotation = [[DJIAircraftAnnotation alloc] initWithCoordiante:tmpLocation];
+                                 [self.mapView addAnnotation: tmpAnnotation];
+                                 [dict setObject:tmpAnnotation forKey:tmpName];
+                                 NSLog(@"%@",dict);
+                             } else {
+                                 [[dict objectForKey:tmpName] setCoordinate:tmpLocation];
+                             }
+                             
+                         }
+                     }
+
+                 }
+             }
+         }];
+    }
+    
 }
 
 

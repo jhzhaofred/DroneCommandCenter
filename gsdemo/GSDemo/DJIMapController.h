@@ -29,7 +29,6 @@
  *  Update Aircraft's location in Map View
  */
 -(void)updateAircraftLocation:(CLLocationCoordinate2D)location withMapView:(MKMapView *)mapView;
-
 /**
  *  Update Aircraft's heading in Map View
  */

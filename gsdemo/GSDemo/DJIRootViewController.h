@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@import Firebase;
+@import GoogleSignIn;
+@interface DJIRootViewController : UIViewController <GIDSignInDelegate, GIDSignInUIDelegate>
+//@interface DJIRootViewController : UIViewController
 
-@interface DJIRootViewController : UIViewController
+@property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (weak, nonatomic) IBOutlet GIDSignInButton *signInButton;
+@property (weak, nonatomic) IBOutlet UIButton *signOutButton;
 
 @end
