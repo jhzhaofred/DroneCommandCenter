@@ -1,4 +1,11 @@
 # DroneCommandCenter
+
+## First Glance
+
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/login.png" width = "525" height = "299" alt="Firebase" align=center/> 
+
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/pilot.png" width = "525" height = "299" alt="Firebase" align=center/> 
+
 ## Usage
   Step 1: Clone everything.
   
@@ -23,7 +30,3 @@
 <img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/info.png" width = "465" height = "230" alt="Firebase" align=center/> 
   
   Step 7: Build and enjoy!
-  
-<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/login.png" width = "525" height = "299" alt="Firebase" align=center/> 
-
-<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/pilot.png" width = "525" height = "299" alt="Firebase" align=center/> 
