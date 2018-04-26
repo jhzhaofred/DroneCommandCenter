@@ -12,10 +12,14 @@
 
 <img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/Firebase.png" width = "465" height = "230" alt="Firebase" align=center /> <img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/include.png" width = "182" height = "230" alt="Firebase" align=center /> 
   
-  Step 4: Change "YOUR_API_KEY" to the key you got in the previous step
-  
-    GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
-    GMSServices.provideAPIKey("YOUR_API_KEY")
-    
-  Step 5: Build and run, enjoy!
+  Step 4: In the Info Section of the projec, add a URL Schemes in URL Type with the value of REVERSED_CLIENT_ID from GoogleService-Info.plist.
 
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/URL.png" width = "465" height = "230" alt="Firebase" align=center /> 
+
+  Step 5: Create a [DJI](https://developer.dji.com/) iOS project. It will give you a DJISDKAppKey.
+  
+  Step 6: In the Info Section of the projec, change "DJISDKAppKey" to the key you got from DJI.
+  
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/info.png" width = "465" height = "230" alt="Firebase" align=center /> 
+    
+  
