@@ -24,6 +24,6 @@
   
   Step 7: Build and enjoy!
   
-<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/login.png" width = "1050" height = "598" alt="Firebase" align=center/> 
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/login.png" width = "525" height = "299" alt="Firebase" align=center/> 
 
-<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/pilot.png" width = "1050" height = "598" alt="Firebase" align=center/> 
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/pilot.png" width = "525" height = "299" alt="Firebase" align=center/> 
