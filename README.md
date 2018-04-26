@@ -10,7 +10,7 @@
   Step 3: Create a [Firebase](https://firebase.google.com/) project. Then open the project add an iOS APP for your project. It 
   will generate a GoogleService-Info.plist file. Include this file into this project.
 
-<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/Firebase.png" width = "698" height = "345" alt="Firebase" align=center /> 
+<img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/Firebase.png" width = "698" height = "345" alt="Firebase" align=center /> <img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/Firebase.png" width = "273" height = "345" alt="Firebase" align=center /> 
   
   Step 4: Change "YOUR_API_KEY" to the key you got in the previous step
   
