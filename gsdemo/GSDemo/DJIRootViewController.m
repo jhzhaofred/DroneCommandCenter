@@ -126,7 +126,8 @@ didSignInForUser:(GIDGoogleUser *)user
          setValue:@{@"username": username,
                     @"location": @{
                             @"latitude": [NSNumber numberWithDouble:0.000],
-                            @"longitude": [NSNumber numberWithDouble:0.000]}
+                            @"longitude": [NSNumber numberWithDouble:0.000],
+                            @"head": [NSNumber numberWithDouble:0.000]}
                     }];
         self.signInButton.hidden = YES;
         self.signOutButton.hidden = NO;
@@ -181,7 +182,7 @@ didDisconnectWithUser:(GIDGoogleUser *)user
     self.altitudeLabel.text = @"0 M";
     
     self.gsButtonVC = [[DJIGSButtonViewController alloc] initWithNibName:@"DJIGSButtonViewController" bundle:[NSBundle mainBundle]];
-    [self.gsButtonVC.view setFrame:CGRectMake(0, self.topBarView.frame.origin.y + self.topBarView.frame.size.height, self.gsButtonVC.view.frame.size.width, self.gsButtonVC.view.frame.size.height)];
+    [self.gsButtonVC.view setFrame:CGRectMake(32, 20, self.gsButtonVC.view.frame.size.width, self.gsButtonVC.view.frame.size.height)];
     self.gsButtonVC.delegate = self;
     [self.view addSubview:self.gsButtonVC.view];
     
@@ -490,10 +491,13 @@ didDisconnectWithUser:(GIDGoogleUser *)user
     [self.mapController updateAircraftHeading:radianYaw];
     int latat = (int) (self.droneLocation.latitude * 100000);
     int longi = (int) (self.droneLocation.longitude * 100000);
+    int headi = (int) (radianYaw * 10);
     if (email != nil) {
         [[[[_ref child:@"users"] child:email] child:@"location"]
          updateChildValues:@{@"latitude": [NSNumber numberWithDouble: ((double)latat)/100000],
-                             @"longitude": [NSNumber numberWithDouble:((double)longi)/100000]}];
+                             @"longitude": [NSNumber numberWithDouble:((double)longi)/100000],
+                             @"head":[NSNumber numberWithDouble:((double)headi)/10]
+                             }];
         self.commentsRef = [_ref child:@"users"];
         
         [_commentsRef
@@ -507,6 +511,7 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                      NSEnumerator *GeoInfo = [child children];
                      FIRDataSnapshot *info;
                      CLLocationCoordinate2D tmpLocation;
+                     double tmphead;
                      NSString *tmpName;
                      while (info = [GeoInfo nextObject]) {
                          if ([[info key] isEqualToString: @"location"]) {
@@ -516,9 +521,11 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                  if ([[PosVal key] isEqualToString: @"latitude"]) {
                                      //NSLog(@"\nRead latitude from %f. ",[[PosVal value] floatValue]);
                                      tmpLocation.latitude = [[PosVal value] floatValue];
-                                 } else {
+                                 } else if ([[PosVal key] isEqualToString: @"longitude"]){
                                      //NSLog(@"Read longitude from %f.\n",[[PosVal value] floatValue]);
                                      tmpLocation.longitude = [[PosVal value] floatValue];
+                                 } else {
+                                     tmphead = [[PosVal value] doubleValue];
                                  }
                              }
                          } else if ([[info key] isEqualToString: @"username"]) {
@@ -531,8 +538,8 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                  NSLog(@"%@",dict);
                              } else {
                                  [[dict objectForKey:tmpName] setCoordinate:tmpLocation];
+                                 [[dict objectForKey:tmpName] updateHeading:tmphead];
                              }
-                             
                          }
                      }
 
@@ -540,7 +547,6 @@ didDisconnectWithUser:(GIDGoogleUser *)user
              }
          }];
     }
-    
 }
 
 
