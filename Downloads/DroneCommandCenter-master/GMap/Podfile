@@ -1,5 +1,0 @@
-source 'https://github.com/CocoaPods/Specs.git'
-target 'GMap' do
-  pod 'GoogleMaps'
-  pod 'GooglePlaces'
-end
