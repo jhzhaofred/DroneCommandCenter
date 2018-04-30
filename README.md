@@ -24,7 +24,7 @@
 
 <img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/URL.png" width = "559" height = "234" alt="Firebase" align=center/> 
 
-  Step 5: Create a [DJI Developer](https://developer.dji.com/) account, and then create an iOS APP at User Cneter. Click on the APP and it will give you a DJISDKAppKey.
+  Step 5: Create a [DJI Developer](https://developer.dji.com/) account, and then create an iOS APP at User Cneter. Click on the APP and it will give you a DJISDKAppKey. Make sure the Bundle ID is the same as the one in Xcode! 
   
   Step 6: In the Info Section of this Xcode Project, change "DJISDKAppKey" to the key you got from DJI. Be aware that when you create a DJI APP, the Bundle Identifier should be the same you used to build this application.
   
