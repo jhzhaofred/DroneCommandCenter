@@ -24,6 +24,7 @@
 		A4E86B831B4A374300F204DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4E86B821B4A374300F204DA /* Images.xcassets */; };
 		A4E86B861B4A374300F204DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4E86B841B4A374300F204DA /* LaunchScreen.xib */; };
 		A4F9574C1B4ADD570017733D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F9574B1B4ADD570017733D /* MapKit.framework */; };
+		CBAF12DA2095689B007B852C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBAF12D92095689B007B852C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		A4E86B911B4A374300F204DA /* GSDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSDemoTests.m; sourceTree = "<group>"; };
 		A4F9574B1B4ADD570017733D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		BD01B4A59AB3761414068C5E /* libPods-GSDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GSDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBAF12D92095689B007B852C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D28B91E9DC596A93C22AC0F1 /* Pods-GSDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GSDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GSDemo/Pods-GSDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				2892DB9420904F96009620C8 /* icon.png */,
+				CBAF12D92095689B007B852C /* GoogleService-Info.plist */,
 				A44305471DA88CF3009C1370 /* GSDemo.entitlements */,
 				A402A06E1B4BC22400129605 /* DJIRootViewController.h */,
 				A402A06F1B4BC22400129605 /* DJIRootViewController.m */,
@@ -213,7 +216,7 @@
 				TargetAttributes = {
 					A4E86B711B4A374300F204DA = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = D9Q7ZJWYWU;
+						DevelopmentTeam = TGXSUSC7F5;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
 								enabled = 1;
@@ -251,6 +254,7 @@
 				A4E86B861B4A374300F204DA /* LaunchScreen.xib in Resources */,
 				A4507F2A1CB506D40037861C /* DJIGSButtonViewController.xib in Resources */,
 				A4E86B831B4A374300F204DA /* Images.xcassets in Resources */,
+				CBAF12DA2095689B007B852C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,7 +467,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = GSDemo/GSDemo.entitlements;
-				DEVELOPMENT_TEAM = D9Q7ZJWYWU;
+				DEVELOPMENT_TEAM = TGXSUSC7F5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -471,7 +475,7 @@
 				INFOPLIST_FILE = GSDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Jiahao;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DJI.DroneCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -482,7 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = GSDemo/GSDemo.entitlements;
-				DEVELOPMENT_TEAM = D9Q7ZJWYWU;
+				DEVELOPMENT_TEAM = TGXSUSC7F5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -490,7 +494,7 @@
 				INFOPLIST_FILE = GSDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Jiahao;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DJI.DroneCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
