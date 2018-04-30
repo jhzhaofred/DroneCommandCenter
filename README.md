@@ -4,6 +4,8 @@
 
 <img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/login.png" width = "525" height = "299" alt="Firebase" align=center/> 
 
+## App in Use 
+
 <img src="https://github.com/jhzhaofred/DroneCommandCenter/blob/master/Screenshots/pilot.png" width = "525" height = "299" alt="Firebase" align=center/> 
 
 ## Usage
